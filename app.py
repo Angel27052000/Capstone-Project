@@ -44,34 +44,48 @@ selected_country = st.sidebar.selectbox("Select Country", confirmed_df['Country/
 selected_year = st.sidebar.selectbox("Select Year", confirmed_unpivoted['Year'].unique())
 
 
-date_range = st.sidebar.date_input("Select Date Range", [confirmed_unpivoted['Date'].min().date(), confirmed_unpivoted['Date'].max().date()])
+date_range = st.sidebar.date_input("Select Date Range for Death Count", 
+                                         [deaths_unpivoted['Date'].min().date(), deaths_unpivoted['Date'].max().date()])
+
+filtered_deaths_range = deaths_unpivoted[(deaths_unpivoted['Country/Region'] == selected_country) & 
+                                        (deaths_unpivoted['Date'] >= pd.to_datetime(date_range[0])) & 
+                                        (deaths_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
+
+filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] == selected_country) & 
+                                        (recovered_unpivoted['Date'] >= pd.to_datetime(date_range[0])) & 
+                                        (recovered_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
+
 
 
 filtered_confirmed = confirmed_unpivoted[(confirmed_unpivoted['Country/Region'] == selected_country) & 
                                         (confirmed_unpivoted['Date'] >= pd.to_datetime(date_range[0])) & 
                                         (confirmed_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
 
-filtered_deaths = deaths_unpivoted[(deaths_unpivoted['Country/Region'] == selected_country) & 
-                                  (deaths_unpivoted['Date'] >= pd.to_datetime(date_range[0])) & 
-                                  (deaths_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
+
+filtered_deaths_range = deaths_unpivoted[(deaths_unpivoted['Country/Region'] == selected_country) & 
+                                        (deaths_unpivoted['Date'] >= pd.to_datetime(date_range[0])) & 
+                                        (deaths_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
 
 filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] == selected_country) & 
                                         (recovered_unpivoted['Date'] >= pd.to_datetime(date_range[0])) & 
                                         (recovered_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
 
+
 fig = px.line(filtered_confirmed, x='Date', y='Confirmed', title='Confirmed Cases',
 line_shape='linear')  
 fig.update_traces(mode='lines',name="Confirmed") 
 
-fig.add_scatter(x=filtered_deaths['Date'], y=filtered_deaths['Deaths'], mode='lines', name='Deaths')
+fig.add_scatter(x=filtered_deaths_range['Date'], y=filtered_deaths_range['Deaths'], mode='lines', name='Deaths')
 fig.add_scatter(x=filtered_recovered['Date'], y=filtered_recovered['Recovered'], mode='lines', name='Recovered')
 
 st.plotly_chart(fig)
 
-st.subheader('Per Day Count for Latest Data')
+st.sidebar.header("Death Count for Date Range")
 
-latest_date = confirmed_unpivoted['Date'].max()
 
-latest_deaths = deaths_unpivoted[deaths_unpivoted['Date'] == latest_date]
 
-st.write(f"{latest_date.strftime('%d-%m-%Y')} - Death Count - {latest_deaths['Deaths_Daily'].sum()}")
+death_count_in_range = filtered_deaths_range['Deaths'].sum()
+
+st.sidebar.write(f"Death Count between {date_range[0]} and {date_range[1]}: {death_count_in_range}")
+
+
