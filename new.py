@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-
+print("Pandas version:", pd.__version__)
 st.set_page_config(page_title='Capstone Dashboard', page_icon='bar_chart', layout='wide')
 
 confirmed_csv_url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
@@ -82,8 +82,6 @@ if filtered_confirmed.empty:
 else:
     st.plotly_chart(fig)
 st.sidebar.header("Death Count for Date Range")
-
-
 
 death_count_in_range = filtered_deaths_range['Deaths'].sum()
 
