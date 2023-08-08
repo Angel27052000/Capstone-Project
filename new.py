@@ -71,8 +71,8 @@ filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] 
                                         (recovered_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
 
 
-fig = px.line(filtered_confirmed, x='Date', y='Confirmed',
-mode='lines',name='Confirmed',labels='Confirmed')
+fig = px.line(filtered_confirmed, x='Date', y='Confirmed',line_shape='linear')
+fig.update_traces(mode='lines',name="Confirmed")
 fig.update_xaxes(title='Date')
 fig.update_yaxes(title='No.of cases')
 
