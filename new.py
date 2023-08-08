@@ -73,7 +73,7 @@ filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] 
 
 fig = px.line(filtered_confirmed, x='Date', y='Confirmed',
 line_shape='linear')  
-fig.update_traces(mode='lines',name="Confirmed") 
+fig.update_traces(mode='lines',name="No.of cases") 
 
 fig.add_scatter(x=filtered_deaths_range['Date'], y=filtered_deaths_range['Deaths'], mode='lines', name='Deaths')
 fig.add_scatter(x=filtered_recovered['Date'], y=filtered_recovered['Recovered'], mode='lines', name='Recovered')
