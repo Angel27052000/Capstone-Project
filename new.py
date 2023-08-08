@@ -71,14 +71,15 @@ filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] 
                                         (recovered_unpivoted['Date'] <= pd.to_datetime(date_range[1]))]
 
 
-fig = px.line(filtered_confirmed, x='Date', y='Confirmed',line_shape='linear')
-fig.update_traces(mode='lines',name="Confirmed")
-fig.update_xaxes(title='Date')
-fig.update_yaxes(title='No.of cases')
+# fig = px.line(filtered_confirmed, x='Date', y='Confirmed',line_shape='linear')
+# fig.update_traces(mode='lines',name="Confirmed")
+
+fig=px.add_scatter(x=filtered_deaths_range['Date'], y=filtered_deaths_range['Confirmed'], mode='lines',name='Confirmed')
 
 fig.add_scatter(x=filtered_deaths_range['Date'], y=filtered_deaths_range['Deaths'], mode='lines',name='Death')
 fig.add_scatter(x=filtered_recovered['Date'], y=filtered_recovered['Recovered'], mode='lines', name='Recovered')
-
+fig.update_xaxes(title='Date')
+fig.update_yaxes(title='No.of cases')
 st.plotly_chart(fig)
 
 st.sidebar.header("Death Count for Date Range")
