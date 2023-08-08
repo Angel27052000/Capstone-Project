@@ -72,7 +72,7 @@ filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] 
 
 
 fig = px.line(filtered_confirmed, x='Date', y='Confirmed',
-line_shape='linear')  
+line_shape='linear',labels='Confirmed')
 fig.update_xaxes(title='Date')
 fig.update_yaxes(title='No.of cases')
 
