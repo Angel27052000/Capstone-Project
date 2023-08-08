@@ -72,11 +72,11 @@ filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] 
 
 
 fig = px.line(filtered_confirmed, x='Date', y='Confirmed',
-line_shape='linear',labels='Confirmed')
+mode='lines',name='Confirmed',labels='Confirmed')
 fig.update_xaxes(title='Date')
 fig.update_yaxes(title='No.of cases')
 
-fig.add_scatter(x=filtered_deaths_range['Date'], y=filtered_deaths_range['Deaths'], mode='lines', name='Deaths')
+fig.add_scatter(x=filtered_deaths_range['Date'], y=filtered_deaths_range['Deaths'], mode='lines',name='Death')
 fig.add_scatter(x=filtered_recovered['Date'], y=filtered_recovered['Recovered'], mode='lines', name='Recovered')
 
 st.plotly_chart(fig)
