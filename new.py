@@ -17,8 +17,6 @@ def unpivot_data(df, metric_name):
     df_unpivoted['Date'] = pd.to_datetime(df_unpivoted['Date'], format='%m/%d/%y')
     return df_unpivoted
 
-
-
 confirmed_unpivoted = unpivot_data(confirmed_df, 'Confirmed')
 deaths_unpivoted = unpivot_data(deaths_df, 'Deaths')
 recovered_unpivoted = unpivot_data(recovered_df, 'Recovered')
@@ -72,6 +70,7 @@ filtered_recovered = recovered_unpivoted[(recovered_unpivoted['Country/Region'] 
 
 
 fig = px.line(filtered_confirmed, x='Date', y='Confirmed',line_shape='linear')
+fig.add_scatter(x=filtered_confirmed['Date'], y=filtered_confirmed['Confirmed'], mode='lines',name='Confirmed')
 fig.add_scatter(x=filtered_deaths_range['Date'], y=filtered_deaths_range['Deaths'], mode='lines',name='Death')
 fig.add_scatter(x=filtered_recovered['Date'], y=filtered_recovered['Recovered'], mode='lines', name='Recovered')
 fig.update_xaxes(title='Date')
